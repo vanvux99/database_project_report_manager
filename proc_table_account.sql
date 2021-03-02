@@ -1,8 +1,14 @@
-﻿use REPORT_MANAGER
+﻿
+-- luôn luôn gọi tới db đang muốn sử dụng
+use REPORT_MANAGER
 go
 
+-- đặt tên proc: 
+-- proc_<chức năng>_<tên bảng>
 create procedure proc_CRUD_accounts
-	@select int = null,
+	-- type data phải trùng với data type đã tạo trong file table.sql
+	-- các đối số luôn phải đặt là null, tiết kiệm thời gian nhập dữ liệu 
+	@select int = null, -- select này để phân các chức năng như  search, insert, update, delete...
 	@tittle_search nvarchar(max) = null,
 
 	@id varchar(100) = null,
@@ -55,7 +61,7 @@ begin
 			@sex
 		)
 
-		if @@rowcount > 0
+		if @@rowcount > 0 -- rowcount: kiểm tra thay đổi trong bảng, nếu nó có thay đổi thì trả về 1 table[0][0] = 'insert'
 			select 'insert'
 		else 
 			select 'bảng chưa được thêm mới'
